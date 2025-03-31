@@ -1,5 +1,32 @@
 # Activitat A02 UF4: Cambiem l'accés a dades de l'aplicació MVC library
 ## Documentació les proves
+Login:
+
+![alt text](imatges/image.png)
+
+Menu Index:
+
+![alt text](imatges/image2.png)
+
+Llistat de llibres:
+
+![alt text](imatges/image3.png)
+
+Inserir llibre:
+
+![alt text](imatges/image4.png)
+
+Insercció a la base de dades:
+
+![alt text](imatges/image5.png)
+
+Cerca de llibre per id:
+
+![alt text](imatges/image6.png)
+
+Creació d'usuari amb permissos:
+
+![alt text](imatges/image7.png)
 
 ## Algunes preguntes:
 ### Per què al servei estem utilitzant mètodes que no hem declarat explícitament al repositori? Com és possible?
