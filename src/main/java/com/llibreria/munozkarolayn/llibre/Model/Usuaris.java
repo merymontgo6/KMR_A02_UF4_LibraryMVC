@@ -2,9 +2,6 @@ package com.llibreria.munozkarolayn.llibre.Model;
 
 public class Usuaris {
 
-    // private int idUsuari;
-    // private String nomUsuari;
-
     private String usuari;
     private String password;
 
