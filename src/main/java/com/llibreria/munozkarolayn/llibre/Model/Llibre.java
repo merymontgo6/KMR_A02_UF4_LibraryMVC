@@ -14,11 +14,11 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "Llibre")
-public class Llibre implements Serializable{
+@Table(name = "llibre")
+public class Llibre {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idLlibre;
+    private Integer idLlibre;
     @Column(nullable = false)
     private String titol;
     @Column

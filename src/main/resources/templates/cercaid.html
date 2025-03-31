@@ -1,45 +1,45 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Cerca per ID</title>
 </head>
 <body>
     <center>
-        <h1>Cerca de llibre per id</h1>
-            <form action="/cercaid" method="post">
-                Id del Llibre: <input type="text" name="idLlibre"><br><br>
-                <input type=submit name="submit" value="Cerca">
-            </form>
-            <br></br>
+        <h1>Cerca llibre per ID</h1>
+        
+        <div th:if="${message}" th:text="${message}" 
+             th:style="${llibreErr} ? 'color: red' : 'color: green'"></div>
 
-            <div th:if="${llibreErr}">
-                <p th:text="${message}"></td>
-            </div>
-            
-            <table th:if="${!llibreErr}" border=1>
-                <thead>
-                    <tr>
-                        <th>IdLlibre</th>
-                        <th>Títol</th>
-                        <th>Autor</th>
-                        <th>Editorial</th>
-                        <th>Data d'edició</th>
-                        <th>Temàtica</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <td><span th:text="${llibre.idLlibre}"></span></td>
-                    <td><span th:text="${llibre.titol}"></span></td>
-                    <td><span th:text="${llibre.autor}"></span></td>
-                    <td><span th:text="${llibre.editorial}"></span></td>
-                    <td><span th:text="${llibre.datapublicacio}"></span></td>
-                    <td><span th:text="${llibre.tematica}"></span></td>
-                </tbody>
+        <form action="/cercaid" method="post">
+            ID Llibre: <input type="number" name="idLlibre" required><br><br>
+            <input type="submit" value="Cercar">
+        </form>
+
+        <div th:if="${llibre != null}">
+            <h2>Detalls del llibre</h2>
+            <table border="1">
+                <tr>
+                    <th>ID</th>
+                    <th>Títol</th>
+                    <th>Autor</th>
+                    <th>Editorial</th>
+                    <th>Data Publicació</th>
+                    <th>Temàtica</th>
+                    <th>ISBN</th>
+                </tr>
+                <tr>
+                    <td th:text="${llibre.idLlibre}"></td>
+                    <td th:text="${llibre.titol}"></td>
+                    <td th:text="${llibre.autor}"></td>
+                    <td th:text="${llibre.editorial}"></td>
+                    <td th:text="${llibre.dataPublicacio}"></td>
+                    <td th:text="${llibre.tematica}"></td>
+                    <td th:text="${llibre.isbn}"></td>
+                </tr>
             </table>
-            <p><a href="/index">Tornar enrere</a></p>        
+        </div>
+
+        <p><a href="/index">Tornar enrere</a></p>
     </center>
-    
 </body>
 </html>

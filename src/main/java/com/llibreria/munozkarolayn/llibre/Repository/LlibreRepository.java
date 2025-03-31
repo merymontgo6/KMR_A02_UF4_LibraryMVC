@@ -17,4 +17,7 @@ public interface LlibreRepository extends CrudRepository<Llibre, Integer> {
     Llibre findByTitol(String titol);
     Set<Llibre> findByTitolAndEditorial(String titol, String editorial);
     Optional<Llibre> findById(Integer id);
+    @Override
+    @NonNull
+    Llibre save(@NonNull Llibre llibre);
 }

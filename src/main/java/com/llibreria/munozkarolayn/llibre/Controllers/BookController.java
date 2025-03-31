@@ -1,7 +1,6 @@
 package com.llibreria.munozkarolayn.llibre.Controllers;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,10 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
-
 import com.llibreria.munozkarolayn.llibre.Model.Llibre;
 import com.llibreria.munozkarolayn.llibre.Model.Usuaris;
-import com.llibreria.munozkarolayn.llibre.Repository.RepoLlibre;
 import com.llibreria.munozkarolayn.llibre.Service.LlibreService;
 
 @Controller
@@ -24,8 +21,6 @@ public class BookController {
 
     @Autowired
     private LlibreService llibreService;
-    @Autowired
-    private RepoLlibre repoLlibre;
 
     @GetMapping("/")
     public String iniciar(Model model) {
@@ -74,26 +69,30 @@ public class BookController {
     public String cercaId(@ModelAttribute("users") Usuaris users,
                           @RequestParam(name = "idLlibre", required = false) String idLlibre, 
                           Model model) {
-        
-        String message = "";
-        boolean llibreErr = false;
-
         try {
-            int idLlib = Integer.parseInt(idLlibre);
-            Optional<Llibre> llibre = llibreService.findByIdLlibre(idLlib);
-            if(llibre.isPresent()) {
-                model.addAttribute("llibre", llibre.get());
-            } else {
-                message = "No hi ha cap llibre amb aquesta id";
-                llibreErr = true;
+            if (idLlibre == null || idLlibre.trim().isEmpty()) {
+                model.addAttribute("message", "Cal introduir un ID");
+                model.addAttribute("llibreErr", true);
+                return "cercaid";
             }
-
-        } catch (Exception e) {
-            message = "La id de llibre ha de ser un nombre enter";
-            llibreErr = true;
-        } 
-        model.addAttribute("message", message);
-        model.addAttribute("llibreErr",llibreErr);
+    
+            int id = Integer.parseInt(idLlibre);
+            Optional<Llibre> llibreOpt = llibreService.findByIdLlibre(id);
+            
+            if (llibreOpt.isPresent()) {
+                model.addAttribute("llibre", llibreOpt.get());
+                model.addAttribute("message", "Llibre trobat");
+                model.addAttribute("llibreErr", false);
+            } else {
+                model.addAttribute("message", "No s'ha trobat cap llibre amb ID: " + id);
+                model.addAttribute("llibreErr", true);
+            }
+            
+        } catch (NumberFormatException e) {
+            model.addAttribute("message", "L'ID ha de ser un número");
+            model.addAttribute("llibreErr", true);
+        }
+        
         return "cercaid";
     }
 
@@ -126,7 +125,7 @@ public class BookController {
     
             Optional<LocalDate> data = llibreService.parseData(datapublicacio);
             if (data.isEmpty()) {
-                model.addAttribute("message", "Format de data invàlid (DD/MM/YYYY)");
+                model.addAttribute("message", "Format invàlid (DD/MM/YYYY)");
                 model.addAttribute("llibreErr", true);
                 return "inserir";
             }

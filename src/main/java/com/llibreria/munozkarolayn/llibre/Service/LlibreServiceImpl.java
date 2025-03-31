@@ -44,7 +44,10 @@ public class LlibreServiceImpl implements LlibreService {
 
     @Override
     public Llibre save(Llibre llibre) {
-        return llibreRepository.save(llibre);
+        try { 
+            Llibre guardat = llibreRepository.save(llibre);
+            return guardat; }
+        catch (Exception e) { throw new RuntimeException("Error al guardar el llibre: " + e.getMessage()); }
     }
 
     @Override
